@@ -122,7 +122,7 @@ async def all_(ctx):
     await ctx.send("\n".join(out))
 
 @bot.command(name="random")
-async def random_(ctx, a: Optional[int] = 1, b: int = 10):
+async def random_(ctx, a: Optional[int] = 10, b: int = 1):
     """Chooses a random integer in a range."""
     if b < a:
         a, b = b, a
