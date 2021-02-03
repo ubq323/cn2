@@ -29,7 +29,7 @@ for idx,m in enumerate(migrations[cur_ver:]):
     db.execute(m)
 db.execute(f"pragma user_version = {len(migrations)};")
 
-with open("emoji.txt") as f:
+with open("emoji.json") as f:
     emoji = json.load(f)
     
 intents = discord.Intents.default()
