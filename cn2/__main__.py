@@ -29,7 +29,7 @@ db.execute(f"pragma user_version = {len(migrations)};")
 intents = discord.Intents.default()
 intents.members = True 
 
-bot = commands.Bot("£", intents=intents)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or("!", "£"), intents=intents)
 
 @bot.event
 async def on_ready():
