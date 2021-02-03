@@ -126,7 +126,7 @@ async def random_(ctx, a: Optional[int] = 1, b: int = 10):
     """Chooses a random integer in a range."""
     if b < a:
         a, b = b, a
-    await ctx.send(f"I choose **{random.randint(a, b)}**")
+    await ctx.send(f"I choose **{randint(a, b)}**")
 		   
 @bot.command()
 async def random_emoji(ctx):
