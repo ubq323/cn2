@@ -3,8 +3,9 @@ import discord
 from discord.ext import commands
 
 from fractions import Fraction
-from random import randint
+from random import randint, choice
 from typing import Optional
+import json
 
 import logging
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s [%(name)s] %(message)s")
@@ -28,6 +29,9 @@ for idx,m in enumerate(migrations[cur_ver:]):
     db.execute(m)
 db.execute(f"pragma user_version = {len(migrations)};")
 
+with open("emoji.txt") as f:
+    emoji = json.load(f)
+    
 intents = discord.Intents.default()
 intents.members = True 
 
@@ -122,6 +126,10 @@ async def random(ctx, a: Optional[int] = 1, b: int = 10):
     if b < a:
         a, b = b, a
     await ctx.send(f"I choose **{random.randint(a, b)}**"    
+		   
+@bot.command(description="Chooses a random emoji.")
+async def random_emoji(ctx):
+    await ctx.send(f"I choose {choice(emoji)}")
 
 if __name__ == "__main__":
     token = os.getenv("TOKEN", None)
