@@ -26,7 +26,10 @@ for idx,m in enumerate(migrations[cur_ver:]):
     db.execute(m)
 db.execute(f"pragma user_version = {len(migrations)};")
 
-bot = commands.Bot("£")
+intents = discord.Intents.default()
+intents.members = True 
+
+bot = commands.Bot("£", intents=intents)
 
 @bot.event
 async def on_ready():
@@ -75,6 +78,8 @@ async def set_(ctx, who: discord.Member, val: Fraction):
     db.commit()
     await ctx.send(f"set {who.display_name}'s WP to {val}")
 
+    
+
 @bot.group(invoke_without_command=True)
 async def player():
     pass
@@ -93,7 +98,23 @@ async def create(ctx, who: discord.Member):
     db.execute("insert into players (discord_id) values (?);", (who.id,))
     db.commit()
     await ctx.send(f"{who.display_name} was created")
-    
+
+@player.command(name="all")
+async def all_(ctx):
+    """list info of all players"""
+    # this will die if we get too many players
+    rows = db.execute("select * from players").fetchall()
+    out = []
+    for row in rows:
+        player = ctx.guild.get_member(int(row["discord_id"]))
+        if player is None:
+            playername = "???"
+        else:
+            playername = player.display_name
+        wp = Fraction(row["wp_num"],row["wp_den"])
+        out.append(f"{playername}: WP = {wp}")
+    await ctx.send("\n".join(out))
+
     
 
 if __name__ == "__main__":
