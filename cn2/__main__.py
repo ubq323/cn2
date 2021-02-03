@@ -121,8 +121,8 @@ async def all_(ctx):
         out.append(f"{playername}: WP = {wp}")
     await ctx.send("\n".join(out))
 
-@bot.command()
-async def random(ctx, a: Optional[int] = 1, b: int = 10):
+@bot.command(name="random")
+async def random_(ctx, a: Optional[int] = 1, b: int = 10):
     """Chooses a random integer in a range."""
     if b < a:
         a, b = b, a
