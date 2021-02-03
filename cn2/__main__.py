@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 
 from fractions import Fraction
-from random import randint, choice
+from random import randint, choices
 from typing import Optional
 import json
 
@@ -121,17 +121,23 @@ async def all_(ctx):
         out.append(f"{playername}: WP = {wp}")
     await ctx.send("\n".join(out))
 
-@bot.command(name="random")
-async def random_(ctx, a: Optional[int] = 10, b: int = 1):
+@bot.command()
+async def random(ctx, a: int = 10, b: int = 1, k: int = 1):
     """Chooses a random integer in a range."""
+    if k > 100:
+        ctx.send("please don't")
+        return
     if b < a:
         a, b = b, a
-    await ctx.send(f"I choose **{randint(a, b)}**")
+    await ctx.send(f"I choose **{', '.join(randint(a, b) for _ in range(k))}**")
 		   
-@bot.command()
-async def random_emoji(ctx):
+@bot.command(aliases = ["emoji"])
+async def random_emoji(ctx, k: int = 10):
     """Chooses a random emoji."""
-    await ctx.send(f"I choose {choice(emoji)}")
+    if k > 100:
+        ctx.send("please don't")
+        return
+    await ctx.send(f"I choose {', '.join(choices(emoji, k=k))}")
 
 if __name__ == "__main__":
     token = os.getenv("TOKEN", None)
