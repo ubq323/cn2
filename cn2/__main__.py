@@ -3,6 +3,8 @@ import discord
 from discord.ext import commands
 
 from fractions import Fraction
+from random import randint
+from typing import Optional
 
 import logging
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s [%(name)s] %(message)s")
@@ -115,7 +117,11 @@ async def all_(ctx):
         out.append(f"{playername}: WP = {wp}")
     await ctx.send("\n".join(out))
 
-    
+@bot.command(description="Chooses a random integer in a range.")
+async def random(ctx, a: Optional[int] = 1, b: int = 10):
+    if b < a:
+        a, b = b, a
+    await ctx.send(f"I choose **{random.randint(a, b)}**"    
 
 if __name__ == "__main__":
     token = os.getenv("TOKEN", None)
