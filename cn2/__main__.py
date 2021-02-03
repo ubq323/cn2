@@ -125,7 +125,7 @@ async def all_(ctx):
 async def random(ctx, a: Optional[int] = 1, b: int = 10):
     if b < a:
         a, b = b, a
-    await ctx.send(f"I choose **{random.randint(a, b)}**"    
+    await ctx.send(f"I choose **{random.randint(a, b)}**")
 		   
 @bot.command(description="Chooses a random emoji.")
 async def random_emoji(ctx):
