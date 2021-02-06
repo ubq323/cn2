@@ -132,7 +132,7 @@ async def random(ctx, a: int = 10, b: int = 1, k: int = 1):
     await ctx.send(f"I choose **{', '.join(randint(a, b) for _ in range(k))}**")
 		   
 @bot.command(aliases = ["emoji"])
-async def random_emoji(ctx, k: int = 10):
+async def random_emoji(ctx, k: int = 1):
     """Chooses a random emoji."""
     if k > 100:
         ctx.send("please don't")
